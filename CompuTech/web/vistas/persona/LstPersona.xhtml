@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h:form id="formIns">
+                <h1>RESGISTRAR PERSONA</h1>
+                <p:panelGrid columns="4">
+                    <p:outputLabel value="PERSONA"/>
+                    <p:inputText value="#{personaC.persona.NOMPER}" maxlength="30" required="true" requiredMessage="se necesita NOMBRE"/>
+                    <p:outputLabel value="APELLIDO"/>
+                    <p:inputText value="#{personaC.persona.APEPER}" maxlength="30" required="true" requiredMessage="se necesita APELLIDO"/>
+                    <p:outputLabel value="DNI"/>
+                    <p:inputText value="#{personaC.persona.DNIPER}" maxlength="8" required="true" requiredMessage="se necesita DNI"/>
+                    <p:outputLabel value="TIPO"/>
+                    <p:selectOneMenu value="#{personaC.persona.TIPPER}" >
+                        <f:selectItem itemLabel="SELLECIONE" itemValue=""/>
+                        <f:selectItem itemLabel="ADMINISTRADOR" itemValue="A"/>
+                        <f:selectItem itemLabel="JEFE DE SUCURSAL" itemValue="J"/>
+                        <f:selectItem itemLabel="VENDEDOR" itemValue="V"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="DIRECCIÓN"/>
+                    <p:inputText value="#{personaC.persona.DIRPER}" maxlength="30" />
+                </p:panelGrid>
+                <p:commandButton value="REGISTRAR" actionListener="#{personaC.registrar()}"/>
+            </h:form>
+        </h:form>
+
+        <p:spacer/>
+        <form id="form">
+            <p:dataTable value="#{personaC.listadoPer}"
+                         var="lista"
+                         id="dtTable"
+                         selection="#{personaC.persona}"
+                         selectionMode="single"
+                         rowKey="#{lista.CODPER}"
+                         rows="8"
+                         paginator="true">
+
+                <p:column headerText="NOMBRE">
+                    <h:outputText value="#{lista.NOMPER}" />
+                </p:column>
+                <p:column headerText="APELLIDO">
+                    <h:outputText value="#{lista.APEPER}" />
+                </p:column>
+                <p:column headerText="DNI">
+                    <h:outputText value="#{lista.DNIPER}" />
+                </p:column>
+                <p:column headerText="TIPO">
+                    <h:outputText value="#{lista.TIPPER}" />
+                </p:column>
+                <p:column headerText="DIRRECIÓN">
+                    <h:outputText value="#{lista.DIRPER}" />
+                </p:column>
+                <p:column headerText="ESTADO">
+                    <h:outputText value="#{lista.ESTPER}" />
+                </p:column>
+            <p:contextMenu for="dtTable">
+                <p:menuitem value="MODIFICAR" update="" oncomplete="PF('wdlgDatos').show"/>
+                <p:menuitem value="ELIMINAR" update="" action="#{personaC.eliminar()}"/>
+            </p:contextMenu>
+            </p:dataTable>
+        </form>
+
+        <h:form>
+            <p:dialog id="dlgDatos" widgetVar="wdlgDatos">
+                <p:panelGrid columns="4">
+                    <p:outputLabel value="PERSONA"/>
+                    <p:inputText value="#{personaC.persona.NOMPER}" maxlength="30" required="true" requiredMessage="se necesita NOMBRE"/>
+                    <p:outputLabel value="APELLIDO"/>
+                    <p:inputText value="#{personaC.persona.APEPER}" maxlength="30" required="true" requiredMessage="se necesita APELLIDO"/>
+                    <p:outputLabel value="DNI"/>
+                    <p:inputText value="#{personaC.persona.DNIPER}" maxlength="8" required="true" requiredMessage="se necesita DNI"/>
+                    <p:outputLabel value="TIPO"/>
+                    <p:selectOneMenu value="#{personaC.persona.TIPPER}" >
+                        <f:selectItem itemLabel="SELLECIONE" itemValue=""/>
+                        <f:selectItem itemLabel="ADMINISTRADOR" itemValue="A"/>
+                        <f:selectItem itemLabel="JEFE DE SUCURSAL" itemValue="J"/>
+                        <f:selectItem itemLabel="VENDEDOR" itemValue="V"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="DIRECCIÓN"/>
+                    <p:inputText value="#{personaC.persona.DIRPER}" maxlength="30" />
+                </p:panelGrid>
+                <p:commandButton value="Actualización" actionListener="#{personaC.modificar()}" oncomplete="PF('dlgDatos').hide;"/>
+                <p:commandButton value="Cancelar" immediate="true" oncomplete="PF('dlgDatos').hide;"/>
+            </p:dialog>
+        </h:form>
+
+    </h:body>
+</html>
+
