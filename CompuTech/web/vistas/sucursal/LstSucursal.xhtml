@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+    <h:head>
+        <title>Registro de sucursal</title>
+    </h:head>
+    <h:body>
+        <p:growl autoUpdate="true" showDetail="true" id="messages"  />
+        <center>
+            <h:form id="formIns">
+                <h1 style="color: #0066ff;margin-top:0">REGISTRAR SUCURSAL</h1>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Nombre"/>
+                    <p:inputText value="#{sucursalC.sucursal.NOMSUC}" maxlength="50"  onkeyup="this.value = this.value.toUpperCase()"  required="true" requiredMessage="Se necesita el nombre"/>
+                    <p:outputLabel value="Dirección" />
+                    <p:inputText value="#{sucursalC.sucursal.SEDSUC}" maxlength="50"  onkeyup="this.value = this.value.toUpperCase()"  required="true" requiredMessage="Se necesita direccion"/> 
+                </p:panelGrid>
+                <p:commandButton value="Registrar" style="color: #ffffff; background-color: #ff0033" actionListener="#{sucursalC.registrar()}" update="formIns :form:dtTable"/> 
+            </h:form>
+        </center>
+
+        <p:spacer/>
+        <h:form id="form">
+            <p:dataTable value="#{sucursalC.listadoSuc}" 
+                         var="lista" 
+                         id="dtTable" 
+                         selectionMode="single"
+                         filteredValue="#{sucursalC.listadoSuc2}"
+                         paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                         paginator="true" 
+                         rowKey="#{lista.CODSUC}"
+                         rows="8" 
+                         selection="#{sucursalC.select}"
+                         style="margin-bottom:20px">
+
+                <p:autoUpdate/>
+
+                <f:facet name="header">
+                    SUCURSALES
+                </f:facet   >
+
+                <p:column headerText="NOMBRE" >
+                    <center>
+                        <h:outputText value="#{lista.NOMSUC}" />
+                    </center>
+                </p:column>
+                <p:column headerText="Dirección"  >
+                    <center>
+                        <h:outputText value="#{lista.SEDSUC}" />
+                    </center>
+                </p:column>
+
+                <f:facet name="footer">
+                    EN TOTAL HAY #{fn:length(sucursalC.listadoSuc)} REGISTROS.
+                </f:facet>
+            </p:dataTable>
+            <p:contextMenu for="dtTable">
+                <p:menuitem value="Modificar" update=":dlgDatos" icon="ui-icon-pencil" 
+                            oncomplete="PF('wdlgDatos').show()"/>
+                <p:menuitem value="Eliminar" update=":messages :form" icon="ui-icon-circle-close" action="#{sucursalC.eliminar()}"/>
+            </p:contextMenu>
+
+        </h:form>
+        <p:dialog id="dlgDatos" widgetVar="wdlgDatos" >
+            <h:form>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Nombre"/>
+                    <p:inputText value="#{sucursalC.select.NOMSUC}" maxlength="50"  onkeyup="this.value = this.value.toUpperCase()"  required="true" requiredMessage="Se necesita el nombre"/>
+                    <p:outputLabel value="Dirección" />
+                    <p:inputText value="#{sucursalC.select.SEDSUC}" maxlength="50"  onkeyup="this.value = this.value.toUpperCase()"  required="true" requiredMessage="Se necesita direccion"/> 
+                </p:panelGrid>
+                <p:commandButton value="Actualizar" actionListener="#{sucursalC.modificar()}"
+                                 update="formIns :form:dtTable" oncomplete="PF('wdlgDatos').hide();">
+                    <p:tooltip trackMouse="true"/>
+                </p:commandButton>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+                <p:commandButton value="Cancelar" immediate="true" oncomplete="PF('wdlgDatos').hide();"/>
+            </h:form>
+        </p:dialog>
+
+    </h:body>
+
+</html>

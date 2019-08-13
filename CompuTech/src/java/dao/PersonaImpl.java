@@ -13,7 +13,7 @@ public class PersonaImpl extends Conexion implements ICRUD<Persona> {
     public void registrar(Persona persona) throws Exception {
         this.conectar();
         try {
-            String sql = "";
+            String sql = "INSERT INTO PERSONA ()";
             PreparedStatement ps = this.getCn().prepareStatement(sql);
             ps.setString(0, sql);
             ps.executeUpdate();
@@ -69,14 +69,14 @@ public class PersonaImpl extends Conexion implements ICRUD<Persona> {
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
                 persona = new Persona();
-                persona.setCODPER(rs.getString("CODPER"));
+                persona.setCODPER(rs.getInt("CODPER"));
                 persona.setNOMPER(rs.getString("NOMPER"));
                 persona.setAPEPER(rs.getString("APEPER"));
                 persona.setDNIPER(rs.getString("DNIPER"));
                 persona.setTIPPER(rs.getString("TIPPER"));
                 persona.setDIRPER(rs.getString("DIRPER"));
                 persona.setESTPER(rs.getString("ESTPER"));
-                persona.setCODUBI(rs.getString("CODUBI"));
+                persona.setCODSUC(rs.getString("CODSUC"));
                 listado.add(persona);
             }
         } catch (Exception e) {

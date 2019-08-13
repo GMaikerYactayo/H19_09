@@ -3,14 +3,14 @@ package modelo;
 
 public class Persona {
     
-    private String CODPER;
+    private int CODPER;
     private String NOMPER;
     private String APEPER;
     private String DNIPER;
     private String TIPPER;
     private String DIRPER;
     private String ESTPER;
-    private String CODUBI;
+    private String CODSUC;
 
     public String getNOMPER() {
         return NOMPER;
@@ -60,21 +60,23 @@ public class Persona {
         this.ESTPER = ESTPER;
     }
 
-    public String getCODUBI() {
-        return CODUBI;
+    public String getCODSUC() {
+        return CODSUC;
     }
 
-    public void setCODUBI(String CODUBI) {
-        this.CODUBI = CODUBI;
+    public void setCODSUC(String CODSUC) {
+        this.CODSUC = CODSUC;
     }
 
-    public String getCODPER() {
+    public int getCODPER() {
         return CODPER;
     }
 
-    public void setCODPER(String CODPER) {
+    public void setCODPER(int CODPER) {
         this.CODPER = CODPER;
     }
+
+    
     
     
     
